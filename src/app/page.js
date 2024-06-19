@@ -25,9 +25,10 @@ const Page = () => {
   const servicespostion = () => {
     const dropservice = dropdownMenu2.current;
   };
+  const inref_new = useRef([]);
+  const inputref=useRef([]);
   const uncheck = () => {
-    inref.current.querySelectorAll('input[type="checkbox"]')
-      .forEach((checkbox) => {
+    inputref.current.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         checkbox.checked = false;
       });
     setForm2Search("");
@@ -335,7 +336,7 @@ const Page = () => {
   const form3 = useRef();
 
   // input ref
-  const inref = useRef([]);
+ 
   // input check function
 
   // Left Form1
@@ -1994,8 +1995,8 @@ const Page = () => {
                     <div className="overflow-y-auto px-5 py-5 md:px-0 md:py-0 max-h-[250px] md:max-h-[275px] ">
                       {data.map((d) =>
                         form2Search === "" ? null : d.payer.includes(
-                            form2Search
-                          ) ? (
+                          form2Search
+                        ) ? (
                           // Ensure strict comparison
                           <div
                             className="data flex justify-start items-center gap-2"
@@ -2005,7 +2006,7 @@ const Page = () => {
                             {/* Add unique key */}
                             <input
                               type="checkbox"
-                              ref={inref}
+                              ref={inputref}
                               id={d.id}
                               onClick={(e) => {
                                 setChipData(e.target.getAttribute("id"));
@@ -2109,7 +2110,11 @@ const Page = () => {
                           <span>Search by tags</span>
                         </button>
                       </div>
-                      <div ref={tabComp1} id="content-name" className="block max-h-[150px] -z-20">
+                      <div
+                        ref={tabComp1}
+                        id="content-name"
+                        className="block max-h-[150px] -z-20"
+                      >
                         <div className=" mb-4">
                           <span className=" left-3 top-2.5 text-zinc-400 flex items-center border-2 border-black rounded-lg h-8 px-2">
                             <svg
@@ -2146,11 +2151,12 @@ const Page = () => {
                           <div className="overflow-y-auto narrow-line max-h-[150px] md:max-h-[200px] px-5 py-5 my-4 md:px-0 md:py-0 my-2">
                             {data.map((d) =>
                               form2Search === "" ? null : d.payer.includes(
-                                  form2Search
-                                ) ? (
+                                form2Search
+                              ) ? (
                                 // Ensure strict comparison
                                 <div
                                   className="data flex items-center gap-2   justify-between "
+                                  key={d.id}
                                   key={d.id}
                                 >
                                   {console.log(form2Search)}
@@ -2158,11 +2164,12 @@ const Page = () => {
                                     {" "}
                                     <input
                                       type="checkbox"
-                                      ref={inref}
+                                      
                                       id={d.id}
                                       name="payerCheckbox"
                                       value={d.id}
                                       className="inputcheck"
+                                      
                                     />
                                     <p className="flex gap-2 items-center w-full border-t-0 border-l-0 border-r-0">
                                       {d.svg}
@@ -2173,13 +2180,11 @@ const Page = () => {
                                   <span className="flex gap-2 text-sm items-center">
                                     <p className="inputcheck">{d.add1}</p>
                                     <button
-                                      className={` px-1 py-1 rounded ${
-                                        d.add2 == `private` &&
+                                      className={` px-1 py-1 rounded ${d.add2 == `private` &&
                                         `text-[#BF8000] bg-transparent `
-                                      } ${
-                                        d.add2 == `public` &&
+                                        } ${d.add2 == `public` &&
                                         `text-[#039855] bg-transparent `
-                                      }  `}
+                                        }  `}
                                     >
                                       {d.add2}
                                     </button>
@@ -2672,13 +2677,10 @@ const Page = () => {
                   {tableCols.status && (
                     <td className="px-4 py-2 ">
                       <span
-                        className={` px-3 py-1 rounded ${
-                          d.status == `Lead` && `text-[#3B82F6] bg-[#EFF6FF] `
-                        } ${
-                          d.status == `Active` && `text-[#15803D] bg-[#F0FDF9] `
-                        }  ${
-                          d.status == `Inactive` && `text-black bg-[#F1F5F9] `
-                        } `}
+                        className={` px-3 py-1 rounded ${d.status == `Lead` && `text-[#3B82F6] bg-[#EFF6FF] `
+                          } ${d.status == `Active` && `text-[#15803D] bg-[#F0FDF9] `
+                          }  ${d.status == `Inactive` && `text-black bg-[#F1F5F9] `
+                          } `}
                       >
                         {d.status}
                       </span>
